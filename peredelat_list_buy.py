@@ -21,7 +21,7 @@ def remake():
     print(n)
 
 def price_buy():
-    print('введите цену без точки')
+    print('введите цену ')
     for name in urls:
         print(name)
         print(urls[name]['url'])
