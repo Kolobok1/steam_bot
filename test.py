@@ -1,6 +1,4 @@
 from steampy.models import GameOptions, Currency
-from bs4 import BeautifulSoup
-import requests
 import json,pickle
 import time,asyncio
 
