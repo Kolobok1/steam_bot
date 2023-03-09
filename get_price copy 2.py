@@ -6,17 +6,15 @@ import time
 
 headers = {
     "Accept": "*/*",
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 \
-    (KHTML, like Gecko) Chrome/106.0.0.0 YaBrowser/22.11.0.2419 Yowser/2.5 Safari/537.36"
 }
 
-login = 'vwkoahpg'
-password = 'sxq0ce1klsui'
+login = 'login'
+password = 'password'
 
 
 proxies_list = [ 
-    # {'https':f'http://{login}:{password}@188.74.210.207:6286'},
-    # {'https': f'http://{login}:{password}@185.199.229.156:7492'},
+    {'https':f'http://{login}:{password}@188.74.210.207:6286'},
+    {'https': f'http://{login}:{password}@185.199.229.156:7492'},
     {'https': f'http://{login}:{password}@185.199.228.220:7300'},
     {'https': f'http://{login}:{password}@185.199.231.45:8382'},
     {'https': f'http://{login}:{password}@188.74.183.10:8279'},
@@ -28,8 +26,6 @@ proxies_list = [
     
 ]
 
-
-
 n = 0
 proxies = proxies_list[n]
 
@@ -38,7 +34,6 @@ proxies = proxies_list[n]
 num = 0
 with open('list_items_buy.json', 'r', encoding='utf-8') as fh:
     urls = json.load(fh)
-
 
 ses = requests.Session()
 
@@ -72,16 +67,9 @@ def get_html(proxies):
     file.close()
     return price
 
-
-
-
 for name in urls:
     try:
         get_html(proxies)
-        
-        
-        # print(price)
-
 
         num += 1
         print('готово ' + str(num))
@@ -94,5 +82,3 @@ for name in urls:
         proxies = proxies_list[n]
   
         get_html(proxies)
-        
-
