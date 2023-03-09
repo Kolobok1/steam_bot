@@ -6,12 +6,10 @@ import json
 
 headers = {
     "Accept": "*/*",
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 \
-(KHTML, like Gecko) Chrome/106.0.0.0 YaBrowser/22.11.0.2419 Yowser/2.5 Safari/537.36"
 }
 
-login = 'vwkoahpg'
-password = 'sxq0ce1klsui'
+login = 'login'
+password = 'password'
 
 def proxies_fun(n):
     proxies_list = [ 
@@ -33,7 +31,6 @@ def proxies_fun(n):
 
 
 n = 0
-found = 0
 err = 0
 
 
@@ -52,9 +49,6 @@ def Inscribed(price_item,name):
         data[name]={'url': url_item}
         with open('list_items_buy.json', 'w') as file:
             json.dump(data, file)
-        # found += 1
-        # print(f'найдено {found} предметов')
-        
 
 def Ordinary(price_item, price):
     
@@ -69,9 +63,8 @@ def Ordinary(price_item, price):
             file.write(name + '\n')
 
 
-def comparison(url,name,proxies): #,proxies
+def comparison(url,name,proxies): 
     
-        
     r = requests.get(url, headers=headers,proxies=proxies) #,proxies=proxies
     print(r)
     
@@ -79,25 +72,17 @@ def comparison(url,name,proxies): #,proxies
     
         try:
             src = r.text
-        
-            # with open(f"html_items.html",'w', encoding='utf-8') as file:
-            #     file.write(r.text)
-            # with open(f"html_items.html", encoding='utf-8') as file:
-            #     src = file.read()
                 
             soup = BeautifulSoup(src, "lxml")
 
-            # name_item = soup.find('span', class_='market_listing_item_name')
             price_item = soup.find('span', class_='sale_price').text
-            # if name == name_item: 
             if quality == 'редкое':
                 Inscribed(price_item,name)
             elif quality == 'обычное':
                 Ordinary(price_item)
             else:
-                print('Что-то не так')
-
-                
+                print('Error')
+    
             asyncio.sleep(3000)
             time.sleep(1)
         except:
@@ -105,10 +90,6 @@ def comparison(url,name,proxies): #,proxies
             err += 1
 
     else:
-        
-        # print('\n' + 'Подождите немного' + '\n')
-        # time.sleep(30)
-        # comparison(url, name)
 
         print('смена IP адреса')
         asyncio.sleep(2000)
@@ -118,11 +99,6 @@ def comparison(url,name,proxies): #,proxies
             n = 0
         proxies = proxies_fun(n)
         comparison(url,name,proxies)
-        
-
-        
-
-
 
 with open('name_items_list.json', 'r', encoding='utf-8') as fh:
     urls = json.load(fh)
@@ -132,8 +108,6 @@ num = 0
 data = {}
 
 quality = input('Введите качество предмета (обычное или редкое) ')
-
-
 
 for name in urls:
     
