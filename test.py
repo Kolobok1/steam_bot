@@ -1,4 +1,3 @@
-from steampy.client import SteamClient #импортируем библиотеку
 from steampy.models import GameOptions, Currency
 from bs4 import BeautifulSoup
 import requests
@@ -6,17 +5,9 @@ import json,pickle
 import time,asyncio
 
 headers = {
-    "Accept": "*/*",
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 \
-(KHTML, like Gecko) Chrome/106.0.0.0 YaBrowser/22.11.0.2419 Yowser/2.5 Safari/537.36"
+    "Accept": "*/*"
 }
 
-
-# def price_stat(price):
-#     print(price)
-
-# steam_client = SteamClient('67FF61057B1CEBA7828E7009A2770B3D') 
-# steam_client.login('kolobo4ik0_0', 'Qwas1452', 'steam_guard.json')
 
 with open(f"steamClient.pkl", 'rb') as file:
     steam_client = pickle.load(file)
@@ -29,10 +20,6 @@ num = 0
 
 buy_item_manually = []
 num_manually = 0
-
-# for name in urls:
-#     price = urls[name]["new_price"][0].replace('.','')
-#     print(price)
 
 for name in urls:
     try:
@@ -87,15 +74,6 @@ for name in urls:
             
             time.sleep(1)
             continue
-            # steam_client
-            # url = urls[name]['url']
-            # # req = requests.get(url,headers=headers)
-            # req = steam_client
-            # src = req.text
-            # soup = BeautifulSoup(src, 'lxml')
-            # cancel = soup.find('div', class_='market_listing_cancel_button')
-            # # buy_order_id = cancel.find('href')
-            # print(cancel)
 
 if buy_item_manually != []:
     print(buy_item_manually)
