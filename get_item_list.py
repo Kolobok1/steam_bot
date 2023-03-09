@@ -7,12 +7,7 @@ import json
 
 headers = {
     "Accept": "*/*",
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 \
-(KHTML, like Gecko) Chrome/106.0.0.0 YaBrowser/22.11.0.2419 Yowser/2.5 Safari/537.36"
 }
-
-
-
 
 def urls(num, headers, url):
     
@@ -39,7 +34,6 @@ def urls(num, headers, url):
                 quantity = el.find('span', class_='market_listing_num_listings_qty').text # количество
                 price = el.find('span', class_='sale_price').text #  цена
             
-            
                 quantity = int(quantity)
                 
             except:
@@ -57,20 +51,10 @@ def urls(num, headers, url):
                     file = open("name_items_list.json", 'w')
                     json.dump(slov,file)
                     file.close()
-                        
-                    # with open(f"url.html",'a', encoding='utf-8') as file:
-                    #     file.write( item_url + '\n') #записываем ссылку
-                    # with open(f"url.txt",'a', encoding='utf-8') as file:
-                    #     file.write( item_url + '\n') #записываем ссылку
                     
                     num += 1
                     
                     print(f'Найдено предметов: {num}')
-                    
-                    # item_name(name,price)
-                    
-                    # with open(f"name_item.html",'a', encoding='utf-8') as file:
-                    #     file.write(name.text + ' | ' +  price + '\n')
             
             asyncio.sleep(3000)        
             time.sleep(1)
@@ -100,8 +84,6 @@ slov = {}
 
 slots = ['tag_armor', 'tag_weapon', 'tag_head', 'tag_offhand_weapon', 'tag_mount', 'tag_legs', 'tag_shoulder', 'tag_belt', 'tag_arms'] # 'tag_back', 'tag_tail','tag_neck'
 
-# slots = ['tag_armor']
-
 for slot in slots:
     stop = 1
     
@@ -118,21 +100,4 @@ for slot in slots:
         
         page = int(page) + 1
     start = 0    
-
-        
-        
-    # url = f'https://steamcommunity.com/market/search/render/?query=&start={start}&count=10&search_descriptions=0&sort_column=popular&sort_dir=desc&appid=570&category_570_Slot[]={slot}&category_570_Quality[]=tag_strange'
-    # stop, num = urls(num, headers=headers, url=url)
-    # start += 10
-    # asyncio.sleep(5000)
-    # # time.sleep(2)
-    # # with open(f"pages_done.txt",'w', encoding='utf-8') as file:
-    # #     file.write('Страница '+ str(page) + ' готова ' )
-    # page = int(page) + 1
-    # start = 0
-    # # with open(f"url.html",'a', encoding='utf-8') as file:
-    # #         file.write('\n' + '-' * 50 + '\n')
-    # # with open(f"name_item.html",'a', encoding='utf-8') as file:
-    # #     file.write('\n' + '-' * 50 + '\n')
-
-# print(slov)
+       
