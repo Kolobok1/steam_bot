@@ -13,62 +13,58 @@ def urls(num, headers, url):
     
     r = requests.get(url, headers=headers)
     
-    if r.status_code == 200:
-
-            
-        html = r.json()['results_html']
-        
-        soup = BeautifulSoup(html, "lxml")
-        
-        name_item = soup.find_all('a', class_='market_listing_row_link') #  select('.market_listing_row_link')
-        
-        if name_item == []:
-            stop = 0
-            return stop, num
-        
-
-        for el in name_item:
-            try:
-                item_url = el.get('href') # el['href']
-                name = el.find('span', class_='market_listing_item_name') # имя
-                quantity = el.find('span', class_='market_listing_num_listings_qty').text # количество
-                price = el.find('span', class_='sale_price').text #  цена
-            
-                quantity = int(quantity)
-                
-            except:
-                print('ошибка')
-                quantity = 0
-                continue
-                
-            
-            if price >= min_price and price <= max_price:
-                if quantity >= 20:
-                
-                    name = el.find('span', class_='market_listing_item_name').text
-                    slov[name] = {'url': item_url, 'price': price}
-                    
-                    file = open("name_items_list.json", 'w')
-                    json.dump(slov,file)
-                    file.close()
-                    
-                    num += 1
-                    
-                    print(f'Найдено предметов: {num}')
-            
-            asyncio.sleep(3000)        
-            time.sleep(1)
-        
-        
-        stop = 1
-        return stop, num
-
-
-    else:
+    if r.status_code != 200:
         print('\n' + 'Подождите немного' + '\n')
         time.sleep(30)
         stop, num = urls(num, headers, url)
         return stop, num
+            
+    html = r.json()['results_html']
+
+    soup = BeautifulSoup(html, "lxml")
+
+    name_item = soup.find_all('a', class_='market_listing_row_link') #  select('.market_listing_row_link')
+
+    if name_item == []:
+        stop = 0
+        return stop, num
+
+
+    for el in name_item:
+        try:
+            item_url = el.get('href') # el['href']
+            name = el.find('span', class_='market_listing_item_name') # имя
+            quantity = el.find('span', class_='market_listing_num_listings_qty').text # количество
+            price = el.find('span', class_='sale_price').text #  цена
+
+            quantity = int(quantity)
+
+        except:
+            print('ошибка')
+            quantity = 0
+            continue
+
+
+        if price >= min_price and price <= max_price:
+            if quantity >= 20:
+
+                name = el.find('span', class_='market_listing_item_name').text
+                slov[name] = {'url': item_url, 'price': price}
+
+                file = open("name_items_list.json", 'w')
+                json.dump(slov,file)
+                file.close()
+
+                num += 1
+
+                print(f'Найдено предметов: {num}')
+
+        asyncio.sleep(3000)        
+        time.sleep(1)
+
+
+    stop = 1
+    return stop, num
 
 
 start = int(input('С какой страницы '))
